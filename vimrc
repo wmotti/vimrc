@@ -263,6 +263,9 @@ nnoremap <F12>     :ShowSpaces 1<CR>
 nmap <F5> :call Preserve("%s/\\s\\+$//ec")<CR>
 nmap <F6> :call Preserve("normal gg=G")<CR>
 
+nnoremap <F3> "=strftime("%Y%m%d%H%M%p")<CR>P
+inoremap <F3> <C-R>=strftime("%Y%m%d%H%M%p")<CR>
+
 " tabs shortcuts
 " map <C-S-]> gt
 " map <C-S-[> gT

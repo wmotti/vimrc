@@ -41,7 +41,7 @@ fun SetupVAM()
         \  'snipmate',
         \  'snipmate-snippets',
         \  'Solarized',
-        \  'supertab',
+        \  'SuperTab%1643',
         \  'surround',
         \  'Syntastic',
         \  'taglist',

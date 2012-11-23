@@ -40,7 +40,8 @@ fun SetupVAM()
         \  'searchfold',
         \  'snipmate',
         \  'snipmate-snippets',
-        \  'supertab',
+        \  'Solarized',
+        \  'SuperTab%1643',
         \  'surround',
         \  'Syntastic',
         \  'taglist',
@@ -50,8 +51,8 @@ fun SetupVAM()
         \  'unimpaired',
         \  'vim-addon-mw-utils',
         \  'vim-indent-object',
-        \  'vividchalk',
-        \  'ZoomWin'
+        \  'vim-coffee-script',
+        \  'vividchalk'
         \ ], {'auto_install' : 0})
     endf
     call SetupVAM()
@@ -146,6 +147,7 @@ au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 au FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
 au FileType cucumber setlocal ts=2 sts=2 sw=2 expandtab
 au FileType smarty setlocal ts=4 sts=4 sw=4 expandtab
+au FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
 
 " *.tpl files are smarty templates
 au BufRead,BufNewFile *.tpl set ft=smarty
@@ -158,6 +160,10 @@ au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
 
 " features files are cucumber files
 au BufRead,BufNewFile *.features set ft=cucumber
+
+" coffee files!
+" au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 
@@ -196,7 +202,12 @@ set modelines=10
 set autowrite
 
 " Default color scheme
-color vividchalk
+"color vividchalk
+syntax enable
+set background=dark
+" set t_Co=16
+let g:solarized_termtrans=1
+colorscheme solarized
 
 " Directories for swp files
 "set backupdir=~/.vim/backup
@@ -302,7 +313,6 @@ nnoremap <SPACE> za
 "nnoremap <C-Space> zi
 let g:php_folding=2
 
-"colorscheme solarized
 
 nnoremap <silent> <F8> :TlistToggle<CR>
 

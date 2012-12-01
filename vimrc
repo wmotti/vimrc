@@ -365,3 +365,7 @@ set statusline+=%*
 set cursorline                  " highlight current line
 hi cursorline guibg=#333333     " highlight bg color of current line
 hi CursorColumn guibg=#333333   " highlight cursor
+
+if filereadable("vimrc.local")
+    source vimrc.local
+endif

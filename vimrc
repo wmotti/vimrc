@@ -65,7 +65,7 @@ filetype plugin indent on
 
 set nocompatible
 
-set number
+" set number
 set ruler
 syntax on
 
@@ -85,7 +85,6 @@ set nowrap
 
 " Tabs and trailing spaces
 " http://vimcasts.org/episodes/show-invisibles/
-set list
 set list listchars=tab:▸\ ,trail:·
 nmap <leader>l :set list!<CR>
 
@@ -103,7 +102,7 @@ set wildignore+=*.o,*.obj,.git,*.rbc
 set laststatus=2
 
 " mouse on!
-set mouse=a
+" set mouse=a
 
 " Without setting this, ZoomWin restores windows in a way that causes
 " equalalways behavior to be triggered the next time CommandT is used.
@@ -191,8 +190,19 @@ vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
 " Enable syntastic syntax checking
-let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=1
+let g:syntastic_quiet_warnings=0
+let g:syntastic_check_on_open=1
+let g:syntastic_auto_jump=0
+let g:syntastic_auto_loc_list=1
+"let g:syntastic_warning_symbol='⚠'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_style_warning_symbol='⚠'
+"let g:syntastic_style_warning_symbol='😐'
+"let g:syntastic_error_symbol='☠'
+let g:syntastic_error_symbol='☠'
+let g:syntastic_style_error_symbol='☠'
+"let g:syntastic_style_error_symbol='😠'
+let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
 " Use modeline overrides
 set modeline
@@ -202,10 +212,9 @@ set modelines=10
 set autowrite
 
 " Default color scheme
-"color vividchalk
-syntax enable
+"syntax enable
 set background=dark
-" set t_Co=16
+
 let g:solarized_termtrans=1
 colorscheme solarized
 
@@ -313,7 +322,6 @@ nnoremap <SPACE> za
 "nnoremap <C-Space> zi
 let g:php_folding=2
 
-
 nnoremap <silent> <F8> :TlistToggle<CR>
 
 "function! FoldBalloon()
@@ -342,3 +350,16 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 
 "set balloonexpr=FoldBalloon()
 "set ballooneval
+
+if has("autocmd") && exists("+omnifunc")
+      autocmd Filetype *
+          \   if &omnifunc == "" |
+          \     setlocal omnifunc=syntaxcomplete#Complete |
+          \   endif
+endif
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+

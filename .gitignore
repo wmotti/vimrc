@@ -2,3 +2,4 @@ vim-addons
 bash-support
 .netrwhist
 *.swp
+vimrc.local

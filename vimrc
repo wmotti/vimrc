@@ -362,4 +362,6 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-
+set cursorline                  " highlight current line
+hi cursorline guibg=#333333     " highlight bg color of current line
+hi CursorColumn guibg=#333333   " highlight cursor

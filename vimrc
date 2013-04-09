@@ -27,6 +27,7 @@ fun SetupVAM()
         \  'align',
         \  'blackboard',
         \  'buf_it',
+        \  'closetag',
         \  'Command-T',
         \  'cucumber.zip',
         \  'dbext',
@@ -38,22 +39,25 @@ fun SetupVAM()
         \  'rails',
         \  'railscasts',
         \  'searchfold',
-        \  'snipmate',
+        \  'ShowMarks7',
         \  'snipmate-snippets',
         \  'Solarized',
         \  'SuperTab%1643',
         \  'surround',
-        \  'Syntastic',
+        \  'Tagbar',
+        \  'tagbar-phpctags',
         \  'taglist',
         \  'The_NERD_Commenter',
         \  'The_NERD_tree',
         \  'tlib',
+        \  'UltiSnips',
         \  'unimpaired',
         \  'vim-addon-mw-utils',
         \  'vim-indent-object',
         \  'vim-coffee-script',
         \  'vividchalk'
         \ ], {'auto_install' : 0})
+        "\  'Syntastic',
     endf
     call SetupVAM()
     " experimental: run after gui has been started (gvim) [3]
@@ -191,7 +195,7 @@ vmap <C-Down> ]egv
 
 " Enable syntastic syntax checking
 let g:syntastic_quiet_warnings=0
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open=0
 let g:syntastic_auto_jump=0
 let g:syntastic_auto_loc_list=1
 "let g:syntastic_warning_symbol='⚠'
@@ -207,6 +211,8 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 " Use modeline overrides
 set modeline
 set modelines=10
+
+set relativenumber
 
 " Automatically save before commands like :next and :make
 set autowrite
@@ -278,7 +284,8 @@ endfunction
 "endfunction
 
 command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
-nnoremap <F12>     :ShowSpaces 1<CR>
+"nnoremap <F12>     :ShowSpaces 1<CR>
+nnoremap <F12>     :SyntasticCheck<CR>
 "nnoremap <silent> <F5> :call <SID>TrimSpaces()<CR>
 nmap <F5> :call Preserve("%s/\\s\\+$//ec")<CR>
 nmap <F6> :call Preserve("normal gg=G")<CR>

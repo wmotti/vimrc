@@ -40,7 +40,6 @@ fun SetupVAM()
         \  'railscasts',
         \  'searchfold',
         \  'ShowMarks7',
-        \  'snipmate-snippets',
         \  'Solarized',
         \  'SuperTab%1643',
         \  'surround',

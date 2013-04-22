@@ -27,6 +27,7 @@ fun SetupVAM()
         \  'align',
         \  'blackboard',
         \  'buf_it',
+        \  'bundler%3207',
         \  'closetag',
         \  'Command-T',
         \  'cucumber.zip',

@@ -327,6 +327,7 @@ set foldlevelstart=1
 nnoremap <SPACE> za
 "nnoremap <C-Space> zi
 let g:php_folding=2
+let g:PHP_vintage_case_default_indent = 1
 
 nnoremap <silent> <F8> :TlistToggle<CR>
 

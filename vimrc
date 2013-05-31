@@ -167,6 +167,9 @@ au BufRead,BufNewFile *.features set ft=cucumber
 " coffee files!
 " au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+" compile on write
+au BufWritePost *.coffee silent CoffeeMake!
+" au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw! " maybe?
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 

@@ -169,6 +169,8 @@ au BufRead,BufNewFile *.features set ft=cucumber
 au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 " compile on write
 "au BufWritePost *.coffee silent CoffeeMake -b | cwindow | redraw!
+" lint on write
+au BufWritePost *.coffee silent CoffeeLint
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 

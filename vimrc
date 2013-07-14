@@ -170,7 +170,7 @@ au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 " compile on write
 "au BufWritePost *.coffee silent CoffeeMake -b | cwindow | redraw!
 " lint on write
-au BufWritePost *.coffee silent CoffeeLint
+au BufWritePost *.coffee silent CoffeeLint! | cwindow
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 

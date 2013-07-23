@@ -83,6 +83,8 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+set autoindent
+
 " Wrap or not?
 set nowrap
 " set wrap
@@ -96,6 +98,7 @@ nmap <leader>l :set list!<CR>
 " Searching
 set hlsearch
 set incsearch
+set showmatch
 set ignorecase
 set smartcase
 
@@ -378,6 +381,55 @@ set statusline+=%*
 set cursorline                  " highlight current line
 hi cursorline guibg=#333333     " highlight bg color of current line
 hi CursorColumn guibg=#333333   " highlight cursor
+
+set winwidth=79
+set scrolloff=3
+set showcmd
+set wildmenu
+let mapleader=","
+set timeout timeoutlen=1000 ttimeoutlen=100
+" Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+" Can't be bothered to understand ESC vs <c-c> in insert mode
+imap <c-c> <esc>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ARROW KEYS ARE UNACCEPTABLE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OpenChangedFiles COMMAND
+" Open a split for each dirty file in git
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! OpenChangedFiles()
+  only " Close all windows, unless they're modified
+  let status = system('git status -s | grep "^ \?\(M\|A\|UU\)" | sed "s/^.\{3\}//"')
+  let filenames = split(status, "\n")
+  exec "edit " . filenames[0]
+  for filename in filenames[1:]
+    exec "sp " . filename
+  endfor
+endfunction
+command! OpenChangedFiles :call OpenChangedFiles()
 
 if filereadable("vimrc.local")
     source vimrc.local

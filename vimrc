@@ -55,6 +55,7 @@ fun SetupVAM()
         \  'vim-addon-mw-utils',
         \  'vim-indent-object',
         \  'vim-coffee-script',
+        \  'vim-ruby',
         \  'vividchalk'
         \ ], {'auto_install' : 0})
         "\  'Syntastic',

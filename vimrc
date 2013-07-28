@@ -69,7 +69,7 @@ fun SetupVAM()
 filetype plugin indent on
 
 set nocompatible
-
+let mapleader=","
 " set number
 set ruler
 syntax on
@@ -386,7 +386,6 @@ set winwidth=79
 set scrolloff=3
 set showcmd
 set wildmenu
-let mapleader=","
 set timeout timeoutlen=1000 ttimeoutlen=100
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j

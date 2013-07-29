@@ -53,6 +53,7 @@ fun SetupVAM()
         \  'UltiSnips',
         \  'unimpaired',
         \  'vim-addon-mw-utils',
+        \  'vim-airline',
         \  'vim-indent-object',
         \  'vim-coffee-script',
         \  'vim-ruby',
@@ -429,6 +430,20 @@ function! OpenChangedFiles()
   endfor
 endfunction
 command! OpenChangedFiles :call OpenChangedFiles()
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_linecolumn_prefix = '␊ '
+let g:airline_linecolumn_prefix = '␤ '
+let g:airline_linecolumn_prefix = '¶ '
+let g:airline_fugitive_prefix = '⎇ '
+let g:airline_paste_symbol = 'ρ'
+let g:airline_paste_symbol = 'Þ'
+let g:airline_paste_symbol = '∥'
+let g:airline_theme = 'solarized'
 
 if filereadable("vimrc.local")
     source vimrc.local

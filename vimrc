@@ -1,71 +1,98 @@
-fun SetupVAM()
-    let vam_install_path = expand('$HOME') . '/.vim/vim-addons'
-    exec 'set runtimepath+='.vam_install_path.'/vim-addon-manager'
-    " YES, you can customize this vam_install_path path and everything still works!
-    let vam_install_path = expand('$HOME') . '/.vim/vim-addons'
-    exec 'set runtimepath+='.vam_install_path.'/vim-addon-manager'
+" put this line first in ~/.vimrc
+set nocompatible | filetype indent plugin on | syn on
 
-    " * unix based os users may want to use this code checking out VAM
-    " * windows users want to use http://mawercer.de/~marc/vam/index.php
-    " to fetch VAM, VAM-known-repositories and the listed plugins
-    " without having to install curl, unzip, git tool chain first
-    " -> BUG [4] (git-less installation)
-    if !filereadable(vam_install_path.'/vim-addon-manager/.git/config') && 1 == confirm("git clone VAM into ".vam_install_path."?","&Y\n&N")
-        " I'm sorry having to add this reminder. Eventually it'll pay off.
-        call confirm("Remind yourself that most plugins ship with documentation (README*, doc/*.txt). Its your first source of knowledge. If you can't find the info you're looking for in reasonable time ask maintainers to improve documentation")
-        exec '!p='.shellescape(vam_install_path).'; mkdir -p "$p" && cd "$p" && git clone --depth 1 git://github.com/MarcWeber/vim-addon-manager.git'
-        " VAM run helptags automatically if you install or update plugins
-        exec 'helptags '.fnameescape(vam_install_path.'/vim-addon-manager/doc')
+fun! EnsureVamIsOnDisk(plugin_root_dir)
+    let vam_autoload_dir = a:plugin_root_dir.'/vim-addon-manager/autoload'
+    if isdirectory(vam_autoload_dir)
+        return 1
+    else
+        if 1 == confirm("Clone VAM into ".a:plugin_root_dir."?","&Y\n&N")
+            " I'm sorry having to add this reminder. Eventually it'll pay off.
+            call confirm("Remind yourself that most plugins ship with ".
+                        \"documentation (README*, doc/*.txt). It is your ".
+                        \"first source of knowledge. If you can't find ".
+                        \"the info you're looking for in reasonable ".
+                        \"time ask maintainers to improve documentation")
+            call mkdir(a:plugin_root_dir, 'p')
+            execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.
+                        \       shellescape(a:plugin_root_dir, 1).'/vim-addon-manager'
+            " VAM runs helptags automatically when you install or update 
+            " plugins
+            exec 'helptags '.fnameescape(a:plugin_root_dir.'/vim-addon-manager/doc')
+        endif
+        return isdirectory(vam_autoload_dir)
     endif
+endfun
 
-    " Example drop git sources unless git is in PATH. Same plugins can
-    " be installed form www.vim.org. Lookup MergeSources to get more control
-    " let g:vim_addon_manager['drop_git_sources'] = !executable('git')
+fun! SetupVAM()
+    " Set advanced options like this:
+    " let g:vim_addon_manager = {}
+    " let g:vim_addon_manager.key = value
+    "     Pipe all output into a buffer which gets written to disk
+    " let g:vim_addon_manager.log_to_buf =1
 
+    " Example: drop git sources unless git is in PATH. Same plugins can
+    " be installed from www.vim.org. Lookup MergeSources to get more control
+    " let g:vim_addon_manager.drop_git_sources = !executable('git')
+    " let g:vim_addon_manager.debug_activation = 1
+
+    " VAM install location:
+    let c = get(g:, 'vim_addon_manager', {})
+    let g:vim_addon_manager = c
+    let c.plugin_root_dir = expand('$HOME/.vim/vim-addons', 1)
+    if !EnsureVamIsOnDisk(c.plugin_root_dir)
+        echohl ErrorMsg | echomsg "No VAM found!" | echohl NONE
+        return
+    endif
+    let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+
+    " Tell VAM which plugins to fetch & load:
     call vam#ActivateAddons([
-        \  'ack',
-        \  'align',
-        \  'blackboard',
-        \  'buf_it',
-        \  'bundler%3207',
-        \  'closetag',
-        \  'Command-T',
-        \  'cucumber.zip',
-        \  'dbext',
-        \  'endwise',
-        \  'fugitive',
-        \  'git.zip',
-        \  'jellybeans',
-        \  'molokai',
-        \  'rails',
-        \  'railscasts',
-        \  'searchfold',
-        \  'ShowMarks7',
-        \  'Solarized',
-        \  'SuperTab%1643',
-        \  'surround',
-        \  'Tagbar',
-        \  'tagbar-phpctags',
-        \  'taglist',
-        \  'The_NERD_Commenter',
-        \  'The_NERD_tree',
-        \  'tlib',
-        \  'UltiSnips',
-        \  'unimpaired',
-        \  'vim-addon-mw-utils',
-        \  'vim-airline',
-        \  'vim-indent-object',
-        \  'vim-coffee-script',
-        \  'vim-ruby',
-        \  'vividchalk'
-        \ ], {'auto_install' : 0})
-        "\  'Syntastic',
-    endf
-    call SetupVAM()
-    " experimental: run after gui has been started (gvim) [3]
-    " option1: au VimEnter * call SetupVAM()
-    " option2: au GUIEnter * call SetupVAM()
-    " See BUGS sections below [*]
+                \  'ack',
+                \  'align',
+                \  'blackboard',
+                \  'buf_it',
+                \  'bundler%3207',
+                \  'closetag',
+                \  'Command-T',
+                \  'cucumber.zip',
+                \  'dbext',
+                \  'endwise',
+                \  'fugitive',
+                \  'git.zip',
+                \  'jellybeans',
+                \  'molokai',
+                \  'rails',
+                \  'railscasts',
+                \  'searchfold',
+                \  'ShowMarks7',
+                \  'Solarized',
+                \  'SuperTab%1643',
+                \  'surround',
+                \  'Tagbar',
+                \  'tagbar-phpctags',
+                \  'taglist',
+                \  'The_NERD_Commenter',
+                \  'The_NERD_tree',
+                \  'tlib',
+                \  'UltiSnips',
+                \  'unimpaired',
+                \  'vim-addon-mw-utils',
+                \  'vim-airline',
+                \  'vim-indent-object',
+                \  'vim-coffee-script',
+                \  'vim-ruby',
+                \  'vividchalk'
+                \ ], {'auto_install' : 0})
+endfun
+call SetupVAM()
+" experimental [E1]: load plugins lazily depending on filetype, See
+" NOTES
+" experimental [E2]: run after gui has been started (gvim) [3]
+" option1:  au VimEnter * call SetupVAM()
+" option2:  au GUIEnter * call SetupVAM()
+" See BUGS sections below [*]
+" Vim 7.0 users see BUGS section [3]
 
 filetype plugin indent on
 
@@ -439,11 +466,13 @@ let g:airline_right_sep = '◀'
 let g:airline_linecolumn_prefix = '␊ '
 let g:airline_linecolumn_prefix = '␤ '
 let g:airline_linecolumn_prefix = '¶ '
-let g:airline_fugitive_prefix = '⎇ '
+let g:airline#extensions#branch#symbol = '⎇ '
 let g:airline_paste_symbol = 'ρ'
 let g:airline_paste_symbol = 'Þ'
 let g:airline_paste_symbol = '∥'
 let g:airline_theme = 'solarized'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 1
 
 if filereadable("vimrc.local")
     source vimrc.local

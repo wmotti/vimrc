@@ -50,7 +50,6 @@ fun! SetupVAM()
     call vam#ActivateAddons([
                 \  'ack',
                 \  'align',
-                \  'blackboard',
                 \  'buf_it',
                 \  'bundler%3207',
                 \  'closetag',
@@ -60,10 +59,7 @@ fun! SetupVAM()
                 \  'endwise',
                 \  'fugitive',
                 \  'git.zip',
-                \  'jellybeans',
-                \  'molokai',
                 \  'rails',
-                \  'railscasts',
                 \  'searchfold',
                 \  'ShowMarks7',
                 \  'Solarized',
@@ -73,7 +69,6 @@ fun! SetupVAM()
                 \  'tagbar-phpctags',
                 \  'taglist',
                 \  'The_NERD_Commenter',
-                \  'The_NERD_tree',
                 \  'tlib',
                 \  'UltiSnips',
                 \  'unimpaired',
@@ -81,8 +76,7 @@ fun! SetupVAM()
                 \  'vim-airline',
                 \  'vim-indent-object',
                 \  'vim-coffee-script',
-                \  'vim-ruby',
-                \  'vividchalk'
+                \  'vim-ruby'
                 \ ], {'auto_install' : 0})
 endfun
 call SetupVAM()
@@ -473,6 +467,138 @@ let g:airline_paste_symbol = '∥'
 let g:airline_theme = 'solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PROMOTE VARIABLE TO RSPEC LET
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! PromoteToLet()
+  :normal! dd
+  " :exec '?^\s*it\>'
+  :normal! P
+  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
+  :normal ==
+endfunction
+:command! PromoteToLet :call PromoteToLet()
+:map <leader>p :PromoteToLet<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PS TO JUMP TO SPECIFIC COMMAND-T TARGETS AND FILES
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gr :topleft :split config/routes.rb<cr>
+function! ShowRoutes()
+  " Requires 'scratch' plugin
+  :topleft 100 :split __Routes__
+  " Make sure Vim doesn't write __Routes__ as a file
+  :set buftype=nofile
+  " Delete everything
+  :normal 1GdG
+  " Put routes output in buffer
+  :0r! zeus rake -s routes
+  " Size window to number of lines (1 plus rake output length)
+  :exec ":normal " . line("$") . _ "
+  " Move cursor to bottom
+  :normal 1GG
+  " Delete empty trailing line
+  :normal dd
+endfunction
+map <leader>gR :call ShowRoutes()<cr>
+map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
+map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
+map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
+map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
+map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
+map <leader>gp :CommandTFlush<cr>\|:CommandT public<cr>
+map <leader>gs :CommandTFlush<cr>\|:CommandT public/stylesheets<cr>
+map <leader>gf :CommandTFlush<cr>\|:CommandT features<cr>
+map <leader>gg :topleft 100 :split Gemfile<cr>
+map <leader>gt :CommandTFlush<cr>\|:CommandTTag<cr>
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SWITCH BETWEEN TEST AND PRODUCTION CODE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! OpenTestAlternate()
+  let new_file = AlternateForCurrentFile()
+  exec ':e ' . new_file
+endfunction
+function! AlternateForCurrentFile()
+  let current_file = expand("%")
+  let new_file = current_file
+  let in_spec = match(current_file, '^spec/') != -1
+  let going_to_spec = !in_spec
+  let in_app = match(current_file, '\<controllers\>') != -1 || match(current_file, '\<models\>') != -1 || match(current_file, '\<views\>') != -1 || match(current_file, '\<helpers\>') != -1
+  if going_to_spec
+    if in_app
+      let new_file = substitute(new_file, '^app/', '', '')
+    end
+    let new_file = substitute(new_file, '\.e\?rb$', '_spec.rb', '')
+    let new_file = 'spec/' . new_file
+  else
+    let new_file = substitute(new_file, '_spec\.rb$', '.rb', '')
+    let new_file = substitute(new_file, '^spec/', '', '')
+    if in_app
+      let new_file = 'app/' . new_file
+    end
+  endif
+  return new_file
+endfunction
+nnoremap <leader>. :call OpenTestAlternate()<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RUNNING TESTS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>t :silent call RunTestFile()<cr>
+map <leader>T :silent call RunNearestTest()<cr>
+map <leader>a :silent call RunTests('')<cr>
+map <leader>c :w\|:silent !script/features<cr>
+map <leader>w :w\|:silent !script/features --profile wip<cr>
+
+function! RunTestFile(...)
+    if a:0
+        let command_suffix = a:1
+    else
+        let command_suffix = ""
+    endif
+
+    " Run the tests for the previously-marked file.
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\)$') != -1
+    if in_test_file
+        call SetTestFile()
+    elseif !exists("t:grb_test_file")
+        return
+    end
+    call RunTests(t:grb_test_file . command_suffix)
+endfunction
+
+function! RunNearestTest()
+    let spec_line_number = line('.')
+    call RunTestFile(":" . spec_line_number)
+endfunction
+
+function! SetTestFile()
+    " Set the spec file that tests will be run for.
+    let t:grb_test_file=@%
+endfunction
+
+function! RunTests(filename)
+    " Write the file and run tests for the given filename
+    if expand("%") != ""
+      :w
+    end
+    if match(a:filename, '\.feature$') != -1
+        exec ":!script/features " . a:filename
+    else
+        if filereadable("script/test")
+            exec ":!script/test " . a:filename
+        elseif filereadable("Gemfile")
+            exec ":!bundle exec rspec --color " . a:filename
+        else
+            exec ":!rspec --color " . a:filename
+        end
+    end
+endfunction
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if filereadable("vimrc.local")
     source vimrc.local

@@ -79,6 +79,7 @@ fun! SetupVAM()
                 \  'vim-airline',
                 \  'vim-indent-object',
                 \  'vim-coffee-script',
+                \  'vim-jst',
                 \  'vim-ruby'
                 \ ], {'auto_install' : 0})
 endfun

@@ -201,7 +201,7 @@ au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 " compile on write
 "au BufWritePost *.coffee silent CoffeeMake -b | cwindow | redraw!
 " lint on write
-au BufWritePost *.coffee silent CoffeeLint! | cwindow
+"au BufWritePost *.coffee silent CoffeeLint! | cwindow
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 
@@ -441,7 +441,7 @@ inoremap <s-tab> <c-n>
 map <Left> <Nop>
 map <Right> <Nop>
 map <Up> <Nop>
-map <Down> <Nop>
+map <Down>  <Nop>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OpenChangedFiles COMMAND
 " Open a split for each dirty file in git
@@ -625,6 +625,9 @@ function! HLNext (blinktime)
     call matchdelete(ring)
     redraw
 endfunction
+
+" disable backspace key to learn CTRL+w
+map <Backspace> <Nop>
 
 if filereadable("vimrc.local")
     source vimrc.local

@@ -53,7 +53,7 @@ fun! SetupVAM()
                 \  'buf_it',
                 \  'bundler%3207',
                 \  'closetag',
-                \  'Command-T',
+                \  'ctrlp',
                 \  'cucumber.zip',
                 \  'dbext',
                 \  'endwise',
@@ -63,6 +63,7 @@ fun! SetupVAM()
                 \  'node.js',
                 \  'rake',
                 \  'rails',
+                \  'Scratch',
                 \  'searchfold',
                 \  'ShowMarks7',
                 \  'Solarized',
@@ -131,7 +132,7 @@ set smartcase
 
 " Tab completion
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc
+set wildignore+=*.o,*.obj,.git,*.rbc,*.swp,.svn
 
 " Status bar
 set laststatus=2
@@ -148,8 +149,12 @@ set noequalalways
 let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
 
-" Command-T configuration
-let g:CommandTMaxHeight=20
+" CtrlP configuration
+let g:ctrlp_match_window = 'max:20'
+"let g:ctrlp_user_command = 'find %s -type f'
+"et g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 " ZoomWin configuration
 map <Leader><Leader> :ZoomWin<CR>
@@ -322,8 +327,8 @@ command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
 "nnoremap <F12>     :ShowSpaces 1<CR>
 nnoremap <F12>     :SyntasticCheck<CR>
 "nnoremap <silent> <F5> :call <SID>TrimSpaces()<CR>
-nmap <F5> :call Preserve("%s/\\s\\+$//ec")<CR>
-nmap <F6> :call Preserve("normal gg=G")<CR>
+nmap <F6> :call Preserve("%s/\\s\\+$//ec")<CR>
+nmap <F7> :call Preserve("normal gg=G")<CR>
 
 nnoremap <F3> "=strftime("%Y%m%d%H%M%p")<CR>P
 inoremap <F3> <C-R>=strftime("%Y%m%d%H%M%p")<CR>
@@ -487,7 +492,7 @@ endfunction
 :map <leader>p :PromoteToLet<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" PS TO JUMP TO SPECIFIC COMMAND-T TARGETS AND FILES
+" PS TO JUMP TO SPECIFIC CTRLP TARGETS AND FILES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>gr :topleft :split config/routes.rb<cr>
 function! ShowRoutes()
@@ -507,18 +512,18 @@ function! ShowRoutes()
   :normal dd
 endfunction
 map <leader>gR :call ShowRoutes()<cr>
-map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
-map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
-map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
-map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
-map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
-map <leader>gp :CommandTFlush<cr>\|:CommandT public<cr>
-map <leader>gs :CommandTFlush<cr>\|:CommandT public/stylesheets<cr>
-map <leader>gf :CommandTFlush<cr>\|:CommandT features<cr>
+map <leader>gv :CtrlPClearCache<cr>\|:CtrlP app/views<cr>
+map <leader>gc :CtrlPClearCache<cr>\|:CtrlP app/controllers<cr>
+map <leader>gm :CtrlPClearCache<cr>\|:CtrlP app/models<cr>
+map <leader>gh :CtrlPClearCache<cr>\|:CtrlP app/helpers<cr>
+map <leader>gl :CtrlPClearCache<cr>\|:CtrlP lib<cr>
+map <leader>gp :CtrlPClearCache<cr>\|:CtrlP public<cr>
+map <leader>gs :CtrlPClearCache<cr>\|:CtrlP public/stylesheets<cr>
+map <leader>gf :CtrlPClearCache<cr>\|:CtrlP features<cr>
 map <leader>gg :topleft 100 :split Gemfile<cr>
-map <leader>gt :CommandTFlush<cr>\|:CommandTTag<cr>
-map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
-map <leader>F :CommandTFlush<cr>\|:CommandT %%<cr>
+map <leader>gt :CtrlPClearCache<cr>\|:CtrlPTag<cr>
+map <leader>f :CtrlPClearCache<cr>\|:CtrlP<cr>
+map <leader>F :CtrlPClearCache<cr>\|:CtrlP %%<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SWITCH BETWEEN TEST AND PRODUCTION CODE

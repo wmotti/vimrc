@@ -51,7 +51,7 @@ fun! SetupVAM()
                 \  'ack',
                 \  'align',
                 \  'buf_it',
-                \  'bundler%3207',
+                \  'bundler%4280',
                 \  'closetag',
                 \  'ctrlp',
                 \  'cucumber.zip',

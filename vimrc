@@ -16,8 +16,7 @@ fun! EnsureVamIsOnDisk(plugin_root_dir)
             call mkdir(a:plugin_root_dir, 'p')
             execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.
                         \       shellescape(a:plugin_root_dir, 1).'/vim-addon-manager'
-            " VAM runs helptags automatically when you install or update 
-            " plugins
+            " VAM runs helptags automatically when you install or update plugins
             exec 'helptags '.fnameescape(a:plugin_root_dir.'/vim-addon-manager/doc')
         endif
         return isdirectory(vam_autoload_dir)
@@ -25,18 +24,6 @@ fun! EnsureVamIsOnDisk(plugin_root_dir)
 endfun
 
 fun! SetupVAM()
-    " Set advanced options like this:
-    " let g:vim_addon_manager = {}
-    " let g:vim_addon_manager.key = value
-    "     Pipe all output into a buffer which gets written to disk
-    " let g:vim_addon_manager.log_to_buf =1
-
-    " Example: drop git sources unless git is in PATH. Same plugins can
-    " be installed from www.vim.org. Lookup MergeSources to get more control
-    " let g:vim_addon_manager.drop_git_sources = !executable('git')
-    " let g:vim_addon_manager.debug_activation = 1
-
-    " VAM install location:
     let c = get(g:, 'vim_addon_manager', {})
     let g:vim_addon_manager = c
     let c.plugin_root_dir = expand('$HOME/.vim/vim-addons', 1)
@@ -86,13 +73,6 @@ fun! SetupVAM()
                 \ ], {'auto_install' : 0})
 endfun
 call SetupVAM()
-" experimental [E1]: load plugins lazily depending on filetype, See
-" NOTES
-" experimental [E2]: run after gui has been started (gvim) [3]
-" option1:  au VimEnter * call SetupVAM()
-" option2:  au GUIEnter * call SetupVAM()
-" See BUGS sections below [*]
-" Vim 7.0 users see BUGS section [3]
 
 filetype plugin indent on
 
@@ -115,7 +95,6 @@ set autoindent
 
 " Wrap or not?
 set nowrap
-" set wrap
 " setlinebreak
 
 " Tabs and trailing spaces
@@ -132,7 +111,7 @@ set smartcase
 
 " Tab completion
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.swp,.svn
+set wildignore+=*/tmp/*,*/cache/*,*.so,*.swp,*.zip,*.tgz,*.o,*.obj
 
 " Status bar
 set laststatus=2
@@ -140,21 +119,22 @@ set laststatus=2
 " mouse on!
 " set mouse=a
 
-" Without setting this, ZoomWin restores windows in a way that causes
-" equalalways behavior to be triggered the next time CommandT is used.
-" This is likely a bludgeon to solve some other issue, but it works
-set noequalalways
-
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
 
 " CtrlP configuration
-let g:ctrlp_match_window = 'max:20'
-"let g:ctrlp_user_command = 'find %s -type f'
-"et g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_match_window = 'max:20,order:btt'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard', 'find %s -type f']
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v^\.|\.(swp|swo)$',
+    \ }
+let g:ctrlp_show_hidden = 0
+let g:ctrlp_lazy_update = 125
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+                          \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 
 " ZoomWin configuration
 map <Leader><Leader> :ZoomWin<CR>
@@ -268,14 +248,6 @@ colorscheme solarized
 "set backupdir=~/.vim/backup
 "set directory=~/.vim/backup
 
-" MacVIM shift+arrow-keys behavior (required in .vimrc)
-let macvim_hig_shift_movement = 1
-
-" Include user's local vim config
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
-endif
-
 " wrap test function
 command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
 
@@ -371,33 +343,6 @@ let g:php_folding=2
 let g:PHP_vintage_case_default_indent = 1
 
 nnoremap <silent> <F8> :TlistToggle<CR>
-
-"function! FoldBalloon()
-    "let foldStart = foldclosed(v:beval_lnum )
-    "let foldEnd
-    "= foldclosedend(v:beval_lnum)
-    "let lines = []
-    "" Detect if we are in a fold
-    "if foldStart > 0
-        "" we are in a fold
-        "let numLines = foldEnd - foldStart + 1
-        "" if we have too many lines in fold, show only the first 14
-        "" and the last 14 lines
-        "if ( numLines > 31 )
-            "let lines = getline( foldStart, foldStart + 14 )
-            "let lines += [ '-- Snipped ' . ( numLines - 30 ) . ' lines --' ]
-            "let lines += getline( foldEnd - 14, foldEnd )
-        "else
-            ""less than 30 lines, lets show all of them
-            "let lines = getline( foldStart, foldEnd )
-        "endif
-    "endif
-    "" return result
-    "return join( lines, has( "balloon_multiline" ) ? "\n" : " " )
-"endfunction
-
-"set balloonexpr=FoldBalloon()
-"set ballooneval
 
 if has("autocmd") && exists("+omnifunc")
       autocmd Filetype *

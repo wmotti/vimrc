@@ -1,4 +1,3 @@
-" put this line first in ~/.vimrc
 set nocompatible | filetype indent plugin on | syn on
 
 fun! EnsureVamIsOnDisk(plugin_root_dir)
@@ -61,6 +60,7 @@ fun! SetupVAM()
                 \  'taglist',
                 \  'The_NERD_Commenter',
                 \  'tlib',
+                \  'tmuxline.vim',
                 \  'UltiSnips',
                 \  'unimpaired',
                 \  'vim-addon-mw-utils',
@@ -422,6 +422,7 @@ let g:airline_paste_symbol = '∥'
 let g:airline_theme = 'solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tmuxline#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROMOTE VARIABLE TO RSPEC LET
@@ -578,6 +579,16 @@ endfunction
 
 " disable backspace key to learn CTRL+w
 map <Backspace> <Nop>
+
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#H',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '%a',
+      \'y'    : '#W %R',
+      \'z'    : '#H'}
 
 if filereadable("vimrc.local")
     source vimrc.local

@@ -564,7 +564,7 @@ call matchadd('ColorColumn', '\%81v', 100)
 nnoremap <silent> n n:call HLNext(0.4)<cr>
 nnoremap <silent> N N:call HLNext(0.4)<cr>
 
-highlight WhiteOnRed ctermbg=red ctermfg=white 
+highlight WhiteOnRed ctermbg=red ctermfg=white
 "=====[ Highlight the match in red ]=============
 function! HLNext (blinktime)
     let [bufnum, lnum, col, off] = getpos('.')
@@ -590,6 +590,6 @@ let g:tmuxline_preset = {
       \'y'    : '#W %R',
       \'z'    : '#H'}
 
-if filereadable("vimrc.local")
-    source vimrc.local
+if filereadable(glob("~/.vim/vimrc.local"))
+    source ~/.vim/vimrc.local
 endif

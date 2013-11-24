@@ -54,7 +54,7 @@ fun! SetupVAM()
                 \  'searchfold',
                 \  'ShowMarks7',
                 \  'Solarized',
-                \  'SuperTab%1643',
+                \  'Supertab',
                 \  'surround',
                 \  'Tagbar',
                 \  'tagbar-phpctags',

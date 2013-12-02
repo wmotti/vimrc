@@ -58,6 +58,7 @@ fun! SetupVAM()
                 \  'Tagbar',
                 \  'tagbar-phpctags',
                 \  'taglist',
+                \  'textobj-rubyblock',
                 \  'The_NERD_Commenter',
                 \  'tlib',
                 \  'tmuxline.vim',

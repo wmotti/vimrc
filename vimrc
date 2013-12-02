@@ -61,7 +61,6 @@ fun! SetupVAM()
                 \  'textobj-rubyblock',
                 \  'The_NERD_Commenter',
                 \  'tlib',
-                \  'tmuxline.vim',
                 \  'UltiSnips',
                 \  'unimpaired',
                 \  'vim-addon-mw-utils',
@@ -423,7 +422,6 @@ let g:airline_paste_symbol = '∥'
 let g:airline_theme = 'solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#tmuxline#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROMOTE VARIABLE TO RSPEC LET
@@ -580,16 +578,6 @@ endfunction
 
 " disable backspace key to learn CTRL+w
 map <Backspace> <Nop>
-
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : '#H',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '%a',
-      \'y'    : '#W %R',
-      \'z'    : '#H'}
 
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local

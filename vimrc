@@ -35,6 +35,7 @@ fun! SetupVAM()
     " Tell VAM which plugins to fetch & load:
     call vam#ActivateAddons([
                 \  'ack',
+                \  'ag',
                 \  'align',
                 \  'buf_it',
                 \  'bundler%4280',
@@ -69,7 +70,8 @@ fun! SetupVAM()
                 \  'vim-indent-object',
                 \  'vim-javascript',
                 \  'vim-jst',
-                \  'vim-ruby'
+                \  'vim-ruby',
+                \  'vim-signify'
                 \ ], {'auto_install' : 0})
 endfun
 call SetupVAM()
@@ -578,6 +580,8 @@ endfunction
 
 " disable backspace key to learn CTRL+w
 map <Backspace> <Nop>
+
+let g:agprg='ag --nogroup --column --smart-case --nocolor'
 
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local

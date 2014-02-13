@@ -69,7 +69,8 @@ fun! SetupVAM()
                 \  'vim-indent-object',
                 \  'vim-javascript',
                 \  'vim-jst',
-                \  'vim-ruby'
+                \  'vim-ruby',
+                \  'vividchalk'
                 \ ], {'auto_install' : 0})
 endfun
 call SetupVAM()

@@ -172,6 +172,7 @@ au FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
 au FileType cucumber setlocal ts=2 sts=2 sw=2 expandtab
 au FileType smarty setlocal ts=4 sts=4 sw=4 expandtab
 au FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
+au FileType sass setlocal ts=2 sts=2 sw=2 expandtab
 
 " *.tpl files are smarty templates
 au BufRead,BufNewFile *.tpl set ft=smarty

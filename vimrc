@@ -46,13 +46,15 @@ fun! SetupVAM()
                 \  'endwise',
                 \  'fugitive',
                 \  'git.zip',
+                \  'Markology',
+                \  'molokai',
+                \  'neat',
                 \  'node',
                 \  'node.js',
                 \  'rake',
                 \  'rails',
                 \  'Scratch',
                 \  'searchfold',
-                \  'ShowMarks7',
                 \  'Solarized',
                 \  'Supertab',
                 \  'surround',
@@ -62,7 +64,6 @@ fun! SetupVAM()
                 \  'textobj-rubyblock',
                 \  'The_NERD_Commenter',
                 \  'tlib',
-                \  'UltiSnips',
                 \  'unimpaired',
                 \  'vim-addon-mw-utils',
                 \  'vim-airline',
@@ -71,6 +72,7 @@ fun! SetupVAM()
                 \  'vim-javascript',
                 \  'vim-jst',
                 \  'vim-ruby',
+                \  'UltiSnips',
                 \  'vividchalk',
                 \  'vim-signify',
                 \ ], {'auto_install' : 0})
@@ -166,6 +168,7 @@ endfunction
 au FileType make set noexpandtab
 au FileType python setlocal noexpandtab
 au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+au FileType slim setlocal ts=2 sts=2 sw=2 expandtab
 au FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
 au FileType cucumber setlocal ts=2 sts=2 sw=2 expandtab
 au FileType smarty setlocal ts=4 sts=4 sw=4 expandtab
@@ -173,6 +176,9 @@ au FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
 
 " *.tpl files are smarty templates
 au BufRead,BufNewFile *.tpl set ft=smarty
+
+" *.tpl files are smarty templates
+au BufRead,BufNewFile *.slim set ft=slim
 
 " Thorfile, Rakefile and Gemfile are Ruby
 au BufRead,BufNewFile {Gemfile,Rakefile,Thorfile,config.ru}    set ft=ruby
@@ -244,8 +250,11 @@ set autowrite
 "syntax enable
 set background=dark
 
-let g:solarized_termtrans=1
+"let g:solarized_termtrans=1
+"let g:solarized_bold=0
+"call togglebg#map("<F5>")
 colorscheme solarized
+"colorscheme molokai
 
 " Directories for swp files
 "set backupdir=~/.vim/backup
@@ -411,19 +420,20 @@ endfunction
 command! OpenChangedFiles :call OpenChangedFiles()
 
 " unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_linecolumn_prefix = '␊ '
-let g:airline_linecolumn_prefix = '␤ '
-let g:airline_linecolumn_prefix = '¶ '
-let g:airline#extensions#branch#symbol = '⎇ '
-let g:airline_paste_symbol = 'ρ'
-let g:airline_paste_symbol = 'Þ'
-let g:airline_paste_symbol = '∥'
-let g:airline_theme = 'solarized'
 let g:airline_powerline_fonts = 1
+let g:airline_symbols = {}
+"let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+"let g:airline_symbols.linenr = '␊ '
+"let g:airline_symbols.linenr = '␤ '
+let g:airline_symbols.linenr = '¶ '
+let g:airline#extensions#branch#symbol = '⎇ '
+"let g:airline_symbols_paste = 'ρ'
+"let g:airline_symbols_paste = 'Þ'
+let g:airline_symbols_paste = '∥'
+let g:airline_theme = 'solarized'
 let g:airline#extensions#branch#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

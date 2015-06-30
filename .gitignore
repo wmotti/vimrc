@@ -1,4 +1,5 @@
-vim-addons
+autoload
+plugged
 bash-support
 .netrwhist
 *.swp

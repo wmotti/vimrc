@@ -1,94 +1,52 @@
-set nocompatible | filetype indent plugin on | syn on
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+endif
 
-fun! EnsureVamIsOnDisk(plugin_root_dir)
-    let vam_autoload_dir = a:plugin_root_dir.'/vim-addon-manager/autoload'
-    if isdirectory(vam_autoload_dir)
-        return 1
-    else
-        if 1 == confirm("Clone VAM into ".a:plugin_root_dir."?","&Y\n&N")
-            " I'm sorry having to add this reminder. Eventually it'll pay off.
-            call confirm("Remind yourself that most plugins ship with ".
-                        \"documentation (README*, doc/*.txt). It is your ".
-                        \"first source of knowledge. If you can't find ".
-                        \"the info you're looking for in reasonable ".
-                        \"time ask maintainers to improve documentation")
-            call mkdir(a:plugin_root_dir, 'p')
-            execute '!git clone --depth=1 git://github.com/MarcWeber/vim-addon-manager '.
-                        \       shellescape(a:plugin_root_dir, 1).'/vim-addon-manager'
-            " VAM runs helptags automatically when you install or update plugins
-            exec 'helptags '.fnameescape(a:plugin_root_dir.'/vim-addon-manager/doc')
-        endif
-        return isdirectory(vam_autoload_dir)
-    endif
-endfun
+call plug#begin('~/.vim/plugged')
 
-fun! SetupVAM()
-    let c = get(g:, 'vim_addon_manager', {})
-    let g:vim_addon_manager = c
-    let c.plugin_root_dir = expand('$HOME/.vim/vim-addons', 1)
-    if !EnsureVamIsOnDisk(c.plugin_root_dir)
-        echohl ErrorMsg | echomsg "No VAM found!" | echohl NONE
-        return
-    endif
-    let &rtp.=(empty(&rtp)?'':',').c.plugin_root_dir.'/vim-addon-manager'
+Plug 'mileszs/ack.vim', { 'on': 'Ack' }
+Plug 'rking/ag.vim', { 'on': 'Ag' }
+"Plug 'junegunn/vim-easy-align'
+"Plug 'vim-scripts/buf_it'
+Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+"Plug 'alvan/vim-closetag'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
+"Plug 'vim-scripts/dbext.vim'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+"Plug 'goatslacker/mango.vim'
+"Plug 'tomasr/molokai'
+"Plug 'moll/vim-node', { 'for': ['javascript', 'coffee'] }
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-rails'
+"Plug 'vim-scripts/SearchFold'
+Plug 'vim-scripts/ShowMarks7'
+Plug 'altercation/vim-colors-solarized'
+Plug 'ervandew/supertab'
+"Plug 'tpope/vim-surround'
+"Plug 'majutsushi/tagbar'
+"Plug 'vim-php/tagbar-phpctags.vim', { 'for': 'php' }
+"Plug 'vim-scripts/taglist.vim'
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+Plug 'scrooloose/nerdcommenter'
+"Plug 'SirVer/ultisnips'
+"Plug 'tpope/vim-unimpaired'
+Plug 'bling/vim-airline'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-sensible'
+Plug 'mhinz/vim-signify'
+"Plug 'tpope/vim-vividchalk'
 
-    " Tell VAM which plugins to fetch & load:
-    call vam#ActivateAddons([
-                \  'ack',
-                \  'ag',
-                \  'align',
-                \  'buf_it',
-                \  'bundler%4280',
-                \  'closetag',
-                \  'ctrlp',
-                \  'cucumber.zip',
-                \  'dbext',
-                \  'endwise',
-                \  'fugitive',
-                \  'git.zip',
-                \  'mango',
-                \  'molokai',
-                \  'node',
-                \  'node.js',
-                \  'rake',
-                \  'rails',
-                \  'Scratch',
-                \  'searchfold',
-                \  'ShowMarks7',
-                \  'Solarized',
-                \  'Supertab',
-                \  'surround',
-                \  'Tagbar',
-                \  'tagbar-phpctags',
-                \  'taglist',
-                \  'textobj-rubyblock',
-                \  'The_NERD_Commenter',
-                \  'tlib',
-                \  'UltiSnips',
-                \  'unimpaired',
-                \  'vim-addon-mw-utils',
-                \  'vim-airline',
-                \  'vim-coffee-script',
-                \  'vim-indent-object',
-                \  'vim-javascript',
-                \  'vim-jst',
-                \  'vim-ruby',
-                \  'vividchalk',
-                \  'vim-signify',
-                \ ], {'auto_install' : 0})
-endfun
-call SetupVAM()
-
-filetype plugin indent on
+call plug#end()
 
 set nocompatible
 let mapleader=","
-" set number
-set ruler
-syntax on
-
-" Set encoding
-set encoding=utf-8
 
 " Tabs and spaces stuff
 set tabstop=4
@@ -96,20 +54,17 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-set autoindent
-
 " Wrap or not?
 set nowrap
 " setlinebreak
 
 " Tabs and trailing spaces
 " http://vimcasts.org/episodes/show-invisibles/
-set list listchars=tab:▸\ ,trail:·
+"set list listchars=tab:▸\ ,trail:·
 nmap <leader>l :set list!<CR>
 
 " Searching
 set hlsearch
-set incsearch
 set showmatch
 set ignorecase
 set smartcase
@@ -117,12 +72,6 @@ set smartcase
 " Tab completion
 set wildmode=list:longest,list:full
 set wildignore+=*/tmp/*,*/cache/*,*.so,*.swp,*.zip,*.tgz,*.o,*.obj
-
-" Status bar
-set laststatus=2
-
-" mouse on!
-" set mouse=a
 
 " NERDTree configuration
 let NERDTreeIgnore=['\.rbc$', '\~$']
@@ -140,9 +89,6 @@ let g:ctrlp_lazy_update = 125
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
                           \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
-
-" ZoomWin configuration
-map <Leader><Leader> :ZoomWin<CR>
 
 " CTags
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
@@ -197,9 +143,6 @@ au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
 "map <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -220,21 +163,6 @@ nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
 
-" Enable syntastic syntax checking
-let g:syntastic_quiet_warnings=0
-let g:syntastic_check_on_open=0
-let g:syntastic_auto_jump=0
-let g:syntastic_auto_loc_list=1
-"let g:syntastic_warning_symbol='⚠'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_warning_symbol='⚠'
-"let g:syntastic_style_warning_symbol='😐'
-"let g:syntastic_error_symbol='☠'
-let g:syntastic_error_symbol='☠'
-let g:syntastic_style_error_symbol='☠'
-"let g:syntastic_style_error_symbol='😠'
-let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-
 " Use modeline overrides
 set modeline
 set modelines=10
@@ -247,7 +175,7 @@ set autowrite
 " Default color scheme
 "syntax enable
 set background=dark
-set t_Co=256
+"set t_Co=256
 
 let g:solarized_termtrans=1
 colorscheme solarized
@@ -368,10 +296,6 @@ hi cursorline guibg=#333333     " highlight bg color of current line
 hi CursorColumn guibg=#333333   " highlight cursor
 
 set winwidth=79
-set scrolloff=3
-set showcmd
-set wildmenu
-set timeout timeoutlen=1000 ttimeoutlen=100
 " Move around splits with <c-hjkl>
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k

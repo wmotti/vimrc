@@ -52,6 +52,7 @@ fun! SetupVAM()
                 \  'node.js',
                 \  'rake',
                 \  'rails',
+                \  'rbenv',
                 \  'Scratch',
                 \  'searchfold',
                 \  'Solarized',

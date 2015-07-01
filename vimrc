@@ -20,6 +20,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 "Plug 'goatslacker/mango.vim'
 "Plug 'tomasr/molokai'
+Plug 'vim-scripts/neat.vim'
 "Plug 'moll/vim-node', { 'for': ['javascript', 'coffee'] }
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-rails'
@@ -38,6 +39,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'tpope/vim-rbenv', { 'on': 'ruby' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'mhinz/vim-signify'

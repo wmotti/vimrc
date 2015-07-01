@@ -46,9 +46,8 @@ fun! SetupVAM()
                 \  'endwise',
                 \  'fugitive',
                 \  'git.zip',
-                \  'Markology',
+                \  'mango',
                 \  'molokai',
-                \  'neat',
                 \  'node',
                 \  'node.js',
                 \  'rake',
@@ -173,6 +172,7 @@ au FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
 au FileType cucumber setlocal ts=2 sts=2 sw=2 expandtab
 au FileType smarty setlocal ts=4 sts=4 sw=4 expandtab
 au FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
+au FileType sass setlocal ts=2 sts=2 sw=2 expandtab
 
 " *.tpl files are smarty templates
 au BufRead,BufNewFile *.tpl set ft=smarty
@@ -184,6 +184,7 @@ au BufRead,BufNewFile *.slim set ft=slim
 au BufRead,BufNewFile {Gemfile,Rakefile,Thorfile,config.ru}    set ft=ruby
 
 " md, markdown, and mk are markdown and define buffer-local preview
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
 
 " features files are cucumber files
@@ -249,6 +250,7 @@ set autowrite
 " Default color scheme
 "syntax enable
 set background=dark
+set t_Co=256
 
 "let g:solarized_termtrans=1
 "let g:solarized_bold=0

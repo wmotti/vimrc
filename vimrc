@@ -32,6 +32,7 @@ Plug 'ervandew/supertab'
 "Plug 'majutsushi/tagbar'
 "Plug 'vim-php/tagbar-phpctags.vim', { 'for': 'php' }
 "Plug 'vim-scripts/taglist.vim'
+Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'scrooloose/nerdcommenter'
 "Plug 'SirVer/ultisnips'
@@ -44,11 +45,20 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'mhinz/vim-signify'
 "Plug 'tpope/vim-vividchalk'
+Plug 'skalnik/vim-vroom'
+Plug 'benmills/vimux'
+"Plug 'pgr0ss/vimux-ruby-test'
+"Plug 'jgdavey/vim-turbux'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-scripts/gitignore'
+Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-sleuth'
+Plug 'AndrewRadev/splitjoin.vim'
 
 call plug#end()
 
 set nocompatible
-let mapleader=","
+let mapleader="\<Space>"
 
 " Tabs and spaces stuff
 set tabstop=4
@@ -80,8 +90,17 @@ let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
 
 " CtrlP configuration
+let g:ctrlp_use_caching = 0
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  let g:ctrlp_prompt_mappings = {
+    \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+    \ }
+endif
 let g:ctrlp_match_window = 'max:20,order:btt'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard', 'find %s -type f']
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn)$',
     \ 'file': '\v^\.|\.(swp|swo)$',
@@ -256,6 +275,14 @@ inoremap <F3> <C-R>=strftime("%Y%m%d%H%M%p")<CR>
 " map <C-8> 8gt
 " map <C-9> 9gt
 " map <C-0> :tablast<CR>
+
+" copy & paste to system clipboard with <Space>p and <Space>y
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
 
 "set <F20>=[25~
 "set <F13>=[25~1

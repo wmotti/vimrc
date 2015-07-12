@@ -41,6 +41,7 @@ Plug 'bling/vim-airline'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'tpope/vim-rbenv', { 'on': 'ruby' }
+Plug 'ngmy/vim-rubocop', { 'on': 'ruby' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'mhinz/vim-signify'

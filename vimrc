@@ -18,8 +18,8 @@ Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
-"Plug 'goatslacker/mango.vim'
-"Plug 'tomasr/molokai'
+Plug 'goatslacker/mango.vim'
+Plug 'tomasr/molokai'
 Plug 'vim-scripts/neat.vim'
 "Plug 'moll/vim-node', { 'for': ['javascript', 'coffee'] }
 Plug 'tpope/vim-rake'
@@ -45,7 +45,7 @@ Plug 'ngmy/vim-rubocop', { 'on': 'ruby' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'mhinz/vim-signify'
-"Plug 'tpope/vim-vividchalk'
+Plug 'tpope/vim-vividchalk'
 Plug 'skalnik/vim-vroom'
 Plug 'benmills/vimux'
 "Plug 'pgr0ss/vimux-ruby-test'

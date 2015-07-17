@@ -55,6 +55,7 @@ Plug 'vim-scripts/gitignore'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-sleuth'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'smerrill/vcl-vim-plugin', { 'for': 'vcl' }
 
 call plug#end()
 

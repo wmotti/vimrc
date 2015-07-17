@@ -200,8 +200,8 @@ set autowrite
 set background=dark
 "set t_Co=256
 
-let g:solarized_termtrans=1
-colorscheme solarized
+"let g:solarized_termtrans=1
+colorscheme molokai
 
 " Directories for swp files
 "set backupdir=~/.vim/backup

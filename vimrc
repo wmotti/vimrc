@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'mileszs/ack.vim', { 'on': 'Ack' }
 Plug 'rking/ag.vim', { 'on': 'Ag' }
+Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'junegunn/vim-easy-align'
 "Plug 'vim-scripts/buf_it'
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
@@ -91,7 +92,20 @@ set wildignore+=*/tmp/*,*/cache/*,*.so,*.swp,*.zip,*.tgz,*.o,*.obj
 let NERDTreeIgnore=['\.rbc$', '\~$']
 map <Leader>n :NERDTreeToggle<CR>
 
+" buffergator configuration
+let g:buffergator_viewport_split_policy = 'R'
+let g:buffergator_suppress_keymaps = 1
+nmap <leader>jj :BuffergatorMruCyclePrev<cr>
+nmap <leader>kk :BuffergatorMruCycleNext<cr>
+nmap <leader>bl :BuffergatorOpen<cr>
+"nmap <leader>T :enew<cr>
+nmap <leader>bq :bp <BAR> bd #<cr>
+
 " CtrlP configuration
+"nmap <leader>p :CtrlP<cr>
+"nmap <leader>bb :CtrlPBuffer<cr>
+"nmap <leader>bm :CtrlPMixed<cr>
+"nmap <leader>bs :CtrlPMRU<cr>
 let g:ctrlp_use_caching = 0
 if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor
@@ -104,14 +118,15 @@ else
 endif
 let g:ctrlp_match_window = 'max:20,order:btt'
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v^\.|\.(swp|swo)$',
+    \ 'dir':  '\v[\/]\.(git|hg|svn|\_site)$',
+    \ 'file': '\v^\.|\.(swp|swo|png|jpg|jpeg)$',
     \ }
 let g:ctrlp_show_hidden = 0
 let g:ctrlp_lazy_update = 125
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
                           \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+let g:ctrlp_working_path_mode = 'r'
 
 " CTags
 map <Leader>rt :!ctags --extra=+f -R *<CR><CR>
@@ -398,7 +413,7 @@ function! PromoteToLet()
   :normal ==
 endfunction
 :command! PromoteToLet :call PromoteToLet()
-:map <leader>p :PromoteToLet<cr>
+:map <leader>pl :PromoteToLet<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PS TO JUMP TO SPECIFIC CTRLP TARGETS AND FILES

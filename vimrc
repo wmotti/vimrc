@@ -387,19 +387,22 @@ command! OpenChangedFiles :call OpenChangedFiles()
 
 " unicode symbols
 let g:airline_powerline_fonts = 1
-let g:airline_symbols = {}
-"let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-"let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊ '
-let g:airline_symbols.linenr = '␤ '
-let g:airline_symbols.linenr = '¶ '
-let g:airline#extensions#branch#symbol = '⎇ '
-"let g:airline_symbols_paste = 'ρ'
-"let g:airline_symbols_paste = 'Þ'
-let g:airline_symbols_paste = '∥'
-let g:airline_theme = 'solarized'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+""let g:airline_left_sep = '»'
+"let g:airline_left_sep = '▶'
+""let g:airline_right_sep = '«'
+"let g:airline_right_sep = '◀'
+"let g:airline_symbols.linenr = '␊ '
+"let g:airline_symbols.linenr = '␤ '
+"let g:airline_symbols.linenr = '¶ '
+"let g:airline#extensions#branch#symbol = '⎇ '
+""let g:airline_symbols_paste = 'ρ'
+""let g:airline_symbols_paste = 'Þ'
+"let g:airline_symbols_paste = '∥'
+let g:airline_theme = 'molokai'
 let g:airline#extensions#branch#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

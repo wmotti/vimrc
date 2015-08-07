@@ -57,6 +57,7 @@ Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-sleuth'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'smerrill/vcl-vim-plugin', { 'for': 'vcl' }
+Plug 'slim-template/vim-slim', { 'for': 'slim' }
 
 call plug#end()
 

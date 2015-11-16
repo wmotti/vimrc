@@ -41,8 +41,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'tpope/vim-rbenv', { 'on': 'ruby' }
-Plug 'ngmy/vim-rubocop', { 'on': 'ruby' }
+Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
+Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
 Plug 'mhinz/vim-signify'
@@ -214,7 +214,7 @@ set autowrite
 " Default color scheme
 "syntax enable
 set background=dark
-"set t_Co=256
+set t_Co=256
 
 "let g:solarized_termtrans=1
 colorscheme molokai

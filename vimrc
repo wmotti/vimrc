@@ -6,7 +6,6 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'mileszs/ack.vim', { 'on': 'Ack' }
 Plug 'rking/ag.vim', { 'on': 'Ag' }
 Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'junegunn/vim-easy-align'
@@ -25,6 +24,7 @@ Plug 'vim-scripts/neat.vim'
 "Plug 'moll/vim-node', { 'for': ['javascript', 'coffee'] }
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-rails'
+Plug 'tpope/vim-dispatch'
 "Plug 'vim-scripts/SearchFold'
 Plug 'vim-scripts/ShowMarks7'
 Plug 'altercation/vim-colors-solarized'
@@ -58,10 +58,29 @@ Plug 'tpope/vim-sleuth'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'smerrill/vcl-vim-plugin', { 'for': 'vcl' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
+Plug 'jodosha/vim-greenbar'
+Plug 'jodosha/vim-devnotes'
+Plug 'DataWraith/auto_mkdir'
 
 call plug#end()
 
-set nocompatible
+set nocompatible     " Vim behavior, not Vi.
+set encoding=utf-8   " Use UTF-8 encoding
+set nobackup         " Don't backup
+set nowritebackup    " Write file in place
+set noswapfile       " Don't use swap files (.swp)
+set autoread         " Autoreload buffers
+set autowrite        " Automatically save changes before switching buffers
+syntax enable        " Enable syntax highlight
+filetype plugin indent on
+set laststatus=2                                                             " Always display the status line
+set ruler                                                                    " Show the cursor position all the time
+set cursorline                                                               " Highlight current cursor line
+set statusline=%<%f\ %h%m%r%=\ %{devnotes#statusline()}\ %-14.(%l,%c%V%)\ %P " Status line format
+set list                          " Show invisible chars
+set listchars=""                  " Reset listchars
+set list listchars=tab:»·,trail:· " Set listchars for tabs and trailing spaces
+
 let mapleader="\<Space>"
 
 " Tabs and spaces stuff
@@ -74,16 +93,13 @@ set expandtab
 set nowrap
 " setlinebreak
 
-" Tabs and trailing spaces
-" http://vimcasts.org/episodes/show-invisibles/
-"set list listchars=tab:▸\ ,trail:·
-nmap <leader>l :set list!<CR>
 
-" Searching
-set hlsearch
+" Search
+set hlsearch    " Highlight matches
+set incsearch   " Incremental searching
+set ignorecase  " Searches are case insensitive...
+set smartcase   " ... unless they contain at least one capital letter
 set showmatch
-set ignorecase
-set smartcase
 
 " Tab completion
 set wildmode=list:longest,list:full
@@ -109,8 +125,22 @@ nmap <leader>bq :bp <BAR> bd #<cr>
 "nmap <leader>bs :CtrlPMRU<cr>
 let g:ctrlp_use_caching = 0
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor\ --path-to-agignore\ $HOME/.agignore
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+
+  " bind K to grep word under cursor
+  nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+  " bind , (backward slash) to grep shortcut
+  command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+  nnoremap , :Ag<SPACE>
 else
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
   let g:ctrlp_prompt_mappings = {
@@ -212,16 +242,11 @@ set relativenumber
 set autowrite
 
 " Default color scheme
-"syntax enable
 set background=dark
 set t_Co=256
 
 "let g:solarized_termtrans=1
 colorscheme molokai
-
-" Directories for swp files
-"set backupdir=~/.vim/backup
-"set directory=~/.vim/backup
 
 " wrap test function
 command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
@@ -333,14 +358,6 @@ if has("autocmd") && exists("+omnifunc")
           \     setlocal omnifunc=syntaxcomplete#Complete |
           \   endif
 endif
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-set cursorline                  " highlight current line
-hi cursorline guibg=#333333     " highlight bg color of current line
-hi CursorColumn guibg=#333333   " highlight cursor
 
 set winwidth=79
 " Move around splits with <c-hjkl>
@@ -562,7 +579,24 @@ endfunction
 " disable backspace key to learn CTRL+w
 map <Backspace> <Nop>
 
-let g:agprg='ag --nogroup --column --smart-case --nocolor'
+" run test
+:map <leader>r :!greenbar bundle exec ruby<cr>
+:map <leader>re :!greenbar bundle exec ruby -Itest %<cr>
+
+" Greenbar
+function! RunGreenbarTest(file)
+  return SendTestToTmux(a:file)
+endfunction
+
+function! RunGreenbarFocusedTest(file, line)
+  return SendFocusedTestToTmux(a:file, a:line)
+endfunction
+
+" run test (rspec version)
+":map <leader>r :!greenbar bundle exec ruby<cr>
+":map <leader>re :!greenbar bundle exec rspec %<cr>
+
+:map <leader>dn DevNotes()
 
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local

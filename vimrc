@@ -38,7 +38,8 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'scrooloose/nerdcommenter'
 "Plug 'SirVer/ultisnips'
 "Plug 'tpope/vim-unimpaired'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'tpope/vim-rbenv', { 'for': 'ruby' }

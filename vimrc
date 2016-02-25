@@ -46,7 +46,6 @@ Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-sensible'
-Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-vividchalk'
 Plug 'skalnik/vim-vroom'
 Plug 'benmills/vimux'
@@ -62,6 +61,7 @@ Plug 'slim-template/vim-slim', { 'for': 'slim' }
 Plug 'jodosha/vim-greenbar'
 Plug 'jodosha/vim-devnotes'
 Plug 'DataWraith/auto_mkdir'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 

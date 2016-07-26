@@ -65,13 +65,16 @@ Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 set nocompatible     " Vim behavior, not Vi.
+set scrolloff=3
+set ai
+set showcmd
 set encoding=utf-8   " Use UTF-8 encoding
 set nobackup         " Don't backup
 set nowritebackup    " Write file in place
 set noswapfile       " Don't use swap files (.swp)
 set autoread         " Autoreload buffers
 set autowrite        " Automatically save changes before switching buffers
-syntax enable        " Enable syntax highlight
+syntax on            " Enable syntax highlight
 filetype plugin indent on
 set laststatus=2                                                             " Always display the status line
 set ruler                                                                    " Show the cursor position all the time
@@ -97,9 +100,13 @@ set nowrap
 " Search
 set hlsearch    " Highlight matches
 set incsearch   " Incremental searching
+set showmatch
 set ignorecase  " Searches are case insensitive...
 set smartcase   " ... unless they contain at least one capital letter
-set showmatch
+
+" Bells
+set visualbell t_vb=
+set novisualbell
 
 " Tab completion
 set wildmode=list:longest,list:full

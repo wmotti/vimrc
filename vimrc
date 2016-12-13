@@ -61,6 +61,8 @@ Plug 'jodosha/vim-greenbar'
 Plug 'jodosha/vim-devnotes'
 Plug 'DataWraith/auto_mkdir'
 Plug 'airblade/vim-gitgutter'
+Plug 'vim-utils/vim-ruby-fold', { 'for': 'ruby' }
+Plug 'elixir-lang/vim-elixir'
 
 call plug#end()
 
@@ -191,6 +193,7 @@ au FileType make set noexpandtab
 au FileType python setlocal noexpandtab
 au FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 au FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+au FileType rake setlocal ts=2 sts=2 sw=2 expandtab
 au FileType cucumber setlocal ts=2 sts=2 sw=2 expandtab
 au FileType smarty setlocal ts=4 sts=4 sw=4 expandtab
 au FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
@@ -216,6 +219,9 @@ au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 "au BufWritePost *.coffee silent CoffeeMake -b | cwindow | redraw!
 " lint on write
 "au BufWritePost *.coffee silent CoffeeLint! | cwindow
+
+autocmd BufNewFile,BufRead *.haml setl foldmethod=indent nofoldenable
+autocmd! FileType nofile setl foldmethod=indent nofoldenable
 
 au BufRead,BufNewFile *.txt call s:setupWrapping()
 
@@ -352,7 +358,7 @@ map Q :q
 
 set foldmethod=syntax
 set foldlevelstart=1
-nnoremap <SPACE> za
+"nnoremap <SPACE> za
 "nnoremap <C-Space> zi
 let g:php_folding=2
 let g:PHP_vintage_case_default_indent = 1

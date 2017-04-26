@@ -63,6 +63,7 @@ Plug 'DataWraith/auto_mkdir'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-utils/vim-ruby-fold', { 'for': 'ruby' }
 Plug 'elixir-lang/vim-elixir'
+Plug 'godlygeek/tabular'
 
 call plug#end()
 

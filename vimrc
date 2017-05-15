@@ -64,6 +64,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vim-utils/vim-ruby-fold', { 'for': 'ruby' }
 Plug 'elixir-lang/vim-elixir'
 Plug 'godlygeek/tabular'
+Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
 

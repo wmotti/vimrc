@@ -57,7 +57,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'smerrill/vcl-vim-plugin', { 'for': 'vcl' }
 Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'jodosha/vim-greenbar'
 Plug 'jodosha/vim-devnotes'
 Plug 'DataWraith/auto_mkdir'
 Plug 'airblade/vim-gitgutter'

@@ -1,71 +1,56 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall
-endif
+command! PackUpdate packadd minpac | source ~/.vim/vimrc | call minpac#update()
+command! PackClean  packadd minpac | source ~/.vim/vimrc | call minpac#clean()
+command! PackUpdateAndQuit packadd minpac | source ~/.vim/vimrc | call minpac#update() | call minpac#clean() | qall
 
-call plug#begin('~/.vim/plugged')
+packadd minpac
+call minpac#init()
 
-Plug 'rking/ag.vim', { 'on': 'Ag' }
-Plug 'jeetsukumaran/vim-buffergator'
-"Plug 'junegunn/vim-easy-align'
-"Plug 'vim-scripts/buf_it'
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-"Plug 'alvan/vim-closetag'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-"Plug 'vim-scripts/dbext.vim'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'goatslacker/mango.vim'
-Plug 'tomasr/molokai'
-Plug 'vim-scripts/neat.vim'
-"Plug 'moll/vim-node', { 'for': ['javascript', 'coffee'] }
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-dispatch'
-"Plug 'vim-scripts/SearchFold'
-Plug 'altercation/vim-colors-solarized'
-Plug 'ervandew/supertab'
-"Plug 'tpope/vim-surround'
-"Plug 'majutsushi/tagbar'
-"Plug 'vim-php/tagbar-phpctags.vim', { 'for': 'php' }
-"Plug 'vim-scripts/taglist.vim'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
-Plug 'scrooloose/nerdcommenter'
-"Plug 'SirVer/ultisnips'
-"Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
-Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-vividchalk'
-Plug 'skalnik/vim-vroom'
-Plug 'benmills/vimux'
-"Plug 'pgr0ss/vimux-ruby-test'
-Plug 'jgdavey/vim-turbux'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-scripts/gitignore'
-Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-sleuth'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'smerrill/vcl-vim-plugin', { 'for': 'vcl' }
-Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'jodosha/vim-devnotes'
-Plug 'DataWraith/auto_mkdir'
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-utils/vim-ruby-fold', { 'for': 'ruby' }
-Plug 'elixir-lang/vim-elixir'
-Plug 'godlygeek/tabular'
-Plug 'terryma/vim-multiple-cursors'
-
-call plug#end()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('rking/ag.vim')
+call minpac#add('jeetsukumaran/vim-buffergator')
+call minpac#add('tpope/vim-bundler')
+call minpac#add('kien/ctrlp.vim')
+call minpac#add('tpope/vim-cucumber')
+call minpac#add('tpope/vim-endwise')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-git')
+call minpac#add('goatslacker/mango.vim')
+call minpac#add('tomasr/molokai')
+call minpac#add('vim-scripts/neat.vim')
+call minpac#add('tpope/vim-rake')
+call minpac#add('tpope/vim-rails')
+call minpac#add('tpope/vim-dispatch')
+call minpac#add('altercation/vim-colors-solarized')
+call minpac#add('ervandew/supertab')
+call minpac#add('kana/vim-textobj-user')
+call minpac#add('nelstrom/vim-textobj-rubyblock')
+call minpac#add('scrooloose/nerdcommenter')
+call minpac#add('vim-airline/vim-airline')
+call minpac#add('vim-airline/vim-airline-themes')
+call minpac#add('kchmck/vim-coffee-script')
+call minpac#add('pangloss/vim-javascript')
+call minpac#add('tpope/vim-rbenv')
+call minpac#add('ngmy/vim-rubocop')
+call minpac#add('vim-ruby/vim-ruby')
+call minpac#add('tpope/vim-sensible')
+call minpac#add('tpope/vim-vividchalk')
+call minpac#add('skalnik/vim-vroom')
+call minpac#add('benmills/vimux')
+call minpac#add('jgdavey/vim-turbux')
+call minpac#add('christoomey/vim-tmux-navigator')
+call minpac#add('vim-scripts/gitignore')
+call minpac#add('tpope/vim-rsi')
+call minpac#add('tpope/vim-sleuth')
+call minpac#add('AndrewRadev/splitjoin.vim')
+call minpac#add('smerrill/vcl-vim-plugin')
+call minpac#add('slim-template/vim-slim')
+call minpac#add('jodosha/vim-devnotes')
+call minpac#add('DataWraith/auto_mkdir')
+call minpac#add('airblade/vim-gitgutter')
+call minpac#add('vim-utils/vim-ruby-fold')
+call minpac#add('elixir-lang/vim-elixir')
+call minpac#add('godlygeek/tabular')
+call minpac#add('terryma/vim-multiple-cursors')
 
 set nocompatible     " Vim behavior, not Vi.
 set scrolloff=3
@@ -178,16 +163,16 @@ if has("autocmd")
     \| exe "normal g'\"" | endif
 endif
 
-function s:setupWrapping()
-  set wrap
-  set wm=2
-  set textwidth=72
-endfunction
-
-function s:setupMarkup()
-  call s:setupWrapping()
-  map <buffer> <Leader>p :Mm <CR>
-endfunction
+"function s:setupWrapping()
+"  set wrap
+"  set wm=2
+"  set textwidth=72
+"endfunction
+"
+"function s:setupMarkup()
+"  call s:setupWrapping()
+"  map <buffer> <Leader>p :Mm <CR>
+"endfunction
 
 " make and python use real tabs
 au FileType make set noexpandtab
@@ -224,7 +209,7 @@ au BufNewFile,BufReadPost *.coffee setl foldmethod=indent
 autocmd BufNewFile,BufRead *.haml setl foldmethod=indent nofoldenable
 autocmd! FileType nofile setl foldmethod=indent nofoldenable
 
-au BufRead,BufNewFile *.txt call s:setupWrapping()
+"au BufRead,BufNewFile *.txt call s:setupWrapping()
 
 " Opens an edit command with the path of the currently edited file filled in
 " Normal mode: <Leader>e
@@ -286,7 +271,7 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-function ShowSpaces(...)
+function! ShowSpaces(...)
   let @/='\v(\s+$)|( +\ze\t)'
   let oldhlsearch=&hlsearch
   if !a:0
@@ -309,7 +294,7 @@ endfunction
 "   call cursor(l, c)
 "endfunction
 
-command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
+command! -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
 "nnoremap <F12>     :ShowSpaces 1<CR>
 nnoremap <F12>     :SyntasticCheck<CR>
 "nnoremap <silent> <F5> :call <SID>TrimSpaces()<CR>
@@ -594,17 +579,17 @@ endfunction
 map <Backspace> <Nop>
 
 " run test
-:map <leader>r :!greenbar bundle exec ruby<cr>
-:map <leader>re :!greenbar bundle exec ruby -Itest %<cr>
+":map <leader>r :!greenbar bundle exec ruby<cr>
+":map <leader>re :!greenbar bundle exec ruby -Itest %<cr>
 
 " Greenbar
-function! RunGreenbarTest(file)
-  return SendTestToTmux(a:file)
-endfunction
-
-function! RunGreenbarFocusedTest(file, line)
-  return SendFocusedTestToTmux(a:file, a:line)
-endfunction
+"function! RunGreenbarTest(file)
+"  return SendTestToTmux(a:file)
+"endfunction
+"
+"function! RunGreenbarFocusedTest(file, line)
+"  return SendFocusedTestToTmux(a:file, a:line)
+"endfunction
 
 " run test (rspec version)
 ":map <leader>r :!greenbar bundle exec ruby<cr>

@@ -4,3 +4,4 @@ bash-support
 .netrwhist
 *.swp
 vimrc.local
+pack/

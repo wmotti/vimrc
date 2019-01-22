@@ -1,71 +1,4 @@
-" auto-install vim-plug
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
-endif
-call plug#begin('~/.config/nvim/plugged')
-
-Plug 'rking/ag.vim', { 'on': 'Ag' }
-Plug 'jeetsukumaran/vim-buffergator'
-"Plug 'junegunn/vim-easy-align'
-"Plug 'vim-scripts/buf_it'
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-"Plug 'alvan/vim-closetag'
-Plug 'kien/ctrlp.vim'
-Plug 'tpope/vim-cucumber', { 'for': 'cucumber' }
-"Plug 'vim-scripts/dbext.vim'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'goatslacker/mango.vim'
-Plug 'tomasr/molokai'
-Plug 'vim-scripts/neat.vim'
-"Plug 'moll/vim-node', { 'for': ['javascript', 'coffee'] }
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-dispatch'
-"Plug 'vim-scripts/SearchFold'
-Plug 'altercation/vim-colors-solarized'
-Plug 'ervandew/supertab'
-"Plug 'tpope/vim-surround'
-"Plug 'majutsushi/tagbar'
-"Plug 'vim-php/tagbar-phpctags.vim', { 'for': 'php' }
-"Plug 'vim-scripts/taglist.vim'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
-Plug 'scrooloose/nerdcommenter'
-"Plug 'SirVer/ultisnips'
-"Plug 'tpope/vim-unimpaired'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
-Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-vividchalk'
-Plug 'skalnik/vim-vroom'
-Plug 'benmills/vimux'
-"Plug 'pgr0ss/vimux-ruby-test'
-Plug 'jgdavey/vim-turbux'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-scripts/gitignore'
-Plug 'tpope/vim-rsi'
-Plug 'tpope/vim-sleuth'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'smerrill/vcl-vim-plugin', { 'for': 'vcl' }
-Plug 'slim-template/vim-slim', { 'for': 'slim' }
-Plug 'jodosha/vim-greenbar'
-Plug 'jodosha/vim-devnotes'
-Plug 'DataWraith/auto_mkdir'
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-utils/vim-ruby-fold', { 'for': 'ruby' }
-Plug 'elixir-lang/vim-elixir'
-Plug 'godlygeek/tabular'
-Plug 'Shougo/deoplete.nvim'
-
-call plug#end()
+source ~/.config/nvim/packages.vim
 
 set nocompatible     " Vim behavior, not Vi.
 set scrolloff=3
@@ -178,17 +111,6 @@ if has("autocmd")
     \| exe "normal g'\"" | endif
 endif
 
-function s:setupWrapping()
-  set wrap
-  set wm=2
-  set textwidth=72
-endfunction
-
-function s:setupMarkup()
-  call s:setupWrapping()
-  map <buffer> <Leader>p :Mm <CR>
-endfunction
-
 " make and python use real tabs
 au FileType make set noexpandtab
 au FileType python setlocal noexpandtab
@@ -199,6 +121,7 @@ au FileType cucumber setlocal ts=2 sts=2 sw=2 expandtab
 au FileType smarty setlocal ts=4 sts=4 sw=4 expandtab
 au FileType coffee setlocal ts=2 sts=2 sw=2 expandtab
 au FileType sass setlocal ts=2 sts=2 sw=2 expandtab
+au FileType php setlocal ts=4 sts=4 sw=4 expandtab
 
 " *.tpl files are smarty templates
 au BufRead,BufNewFile *.tpl set ft=smarty
@@ -208,7 +131,6 @@ au BufRead,BufNewFile {Gemfile,Rakefile,Thorfile,config.ru}    set ft=ruby
 
 " md, markdown, and mk are markdown and define buffer-local preview
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} set ft=markdown
-au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
 
 " features files are cucumber files
 au BufRead,BufNewFile *.features set ft=cucumber
@@ -286,52 +208,12 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-function ShowSpaces(...)
-  let @/='\v(\s+$)|( +\ze\t)'
-  let oldhlsearch=&hlsearch
-  if !a:0
-    let &hlsearch=!&hlsearch
-  else
-    let &hlsearch=a:1
-  end
-  return oldhlsearch
-endfunction
-
-"function! <SID>TrimSpaces()
-"   " Preparation: save last search, and cursor position.
-"   let _s=@/
-"   let l = line(".")
-"   let c = col(".")
-"   " Do the business:
-"   %s/\s\+$//ec
-"   " Clean up: restore previous search history, and cursor position
-"   let @/=_s
-"   call cursor(l, c)
-"endfunction
-
-command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
-"nnoremap <F12>     :ShowSpaces 1<CR>
 nnoremap <F12>     :SyntasticCheck<CR>
-"nnoremap <silent> <F5> :call <SID>TrimSpaces()<CR>
 nmap <F6> :call Preserve("%s/\\s\\+$//ec")<CR>
 nmap <F7> :call Preserve("normal gg=G")<CR>
 
 nnoremap <F3> "=strftime("%Y%m%d%H%M%p")<CR>P
 inoremap <F3> <C-R>=strftime("%Y%m%d%H%M%p")<CR>
-
-" tabs shortcuts
-" map <C-S-]> gt
-" map <C-S-[> gT
-" map <C-1> 1gt
-" map <C-2> 2gt
-" map <C-3> 3gt
-" map <C-4> 4gt
-" map <C-5> 5gt
-" map <C-6> 6gt
-" map <C-7> 7gt
-" map <C-8> 8gt
-" map <C-9> 9gt
-" map <C-0> :tablast<CR>
 
 " copy & paste to system clipboard with <Space>p and <Space>y
 vmap <Leader>y "+y
@@ -436,6 +318,9 @@ let g:airline_symbols.space = "\ua0"
 "let g:airline_symbols_paste = '∥'
 let g:airline_theme = 'molokai'
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_completion_enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PROMOTE VARIABLE TO RSPEC LET
@@ -612,6 +497,10 @@ endfunction
 
 :map <leader>dn DevNotes()
 
-if filereadable(glob("~/.vim/vimrc.local"))
-    source ~/.vim/vimrc.local
-endif
+set rtp^=/usr/share/vim/vimfiles/
+
+nnoremap <C-p> :FuzzyOpen<CR>
+
+"if filereadable(glob("~/.vim/vimrc.local"))
+"    source ~/.vim/vimrc.local
+"endif

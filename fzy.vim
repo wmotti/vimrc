@@ -1,3 +1,4 @@
+" fzy finds a file
 function! FzyCommand(choice_command, vim_command) abort
     let l:callback = {
                 \ 'window_id': win_getid(),
@@ -28,3 +29,25 @@ endfunction
 nnoremap <leader>e  :call FzyCommand("rg --files", ":e")<cr>
 nnoremap <leader>vs :call FzyCommand("rg --files", ":vs")<cr>
 nnoremap <leader>sp :call FzyCommand("rg --files", ":sp")<cr>
+
+" fzy finds a buffer
+function! FzyBuffer()
+  let bufnrs = filter(range(1, bufnr("$")), 'buflisted(v:val)')
+  let buffers = map(bufnrs, 'bufname(v:val)')
+  call FzyCommand('echo "' . join(buffers, "\n") . '"', ":b")
+endfunction
+
+nnoremap <leader>b :call FzyBuffer()<cr>
+
+" fzy finds a file containing the word under the cursor
+function! FzyIdentifier()
+  " Yank the word under the cursor into the z register
+  normal "zyiw
+  " Fuzzy match files in the current directory, starting with the word under
+  " the cursor
+  call FzyCommand("rg -l " . @z, ":e")
+endfunction
+nnoremap <c-g> :call FzyIdentifier()<cr>
+
+
+" inspiration: https://github.com/garybernhardt/selecta/blob/master/EXAMPLES.md

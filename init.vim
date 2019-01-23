@@ -1,1 +1,2 @@
-let mapleader = ','
+source minpac.vim
+source vimrc.vim

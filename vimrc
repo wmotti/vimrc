@@ -51,6 +51,15 @@ call minpac#add('vim-utils/vim-ruby-fold')
 call minpac#add('elixir-lang/vim-elixir')
 call minpac#add('godlygeek/tabular')
 call minpac#add('terryma/vim-multiple-cursors')
+call minpac#add('jceb/vim-orgmode')
+call minpac#add('vim-scripts/utl.vim')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('vim-scripts/taglist.vim')
+call minpac#add('majutsushi/tagbar')
+call minpac#add('tpope/vim-speeddating')
+call minpac#add('chrisbra/NrrwRgn')
+call minpac#add('mattn/calendar-vim')
+call minpac#add('inkarkat/vim-SyntaxRange')
 
 set nocompatible     " Vim behavior, not Vi.
 set scrolloff=3
@@ -596,6 +605,23 @@ map <Backspace> <Nop>
 ":map <leader>re :!greenbar bundle exec rspec %<cr>
 
 :map <leader>dn DevNotes()
+
+function! FzyCommand(choice_command, vim_command)
+  try
+    let output = system(a:choice_command . " | fzy ")
+  catch /Vim:Interrupt/
+    " Swallow errors from ^C, allow redraw! below
+  endtry
+  redraw!
+  if v:shell_error == 0 && !empty(output)
+    exec a:vim_command . ' ' . output
+  endif
+endfunction
+
+"nnoremap <leader>e :call FzyCommand("find -type f", ":e")<cr>
+"nnoremap <leader>v :call FzyCommand("find -type f", ":vs")<cr>
+"nnoremap <leader>s :call FzyCommand("find -type f", ":sp")<cr>
+nnoremap <C-p> :call FzyCommand("fd -t f", ":e")<CR>
 
 if filereadable(glob("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local

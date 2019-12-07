@@ -22,4 +22,4 @@ endif
 command! PackUpdate packadd minpac | source ~/.config/nvim/init.vim | call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  packadd minpac | source ~/.config/nvim/init.vim | call minpac#clean()
 command! PackStatus packadd minpac | source ~/.config/nvim/init.vim | call minpac#status()
-command! PackUpdateAndQuit packadd minpac | source ~/.config/nvim/init.vim | call minpac#update() | call minpac#clean() | qall
+command! PackUpdateAndQuit packadd minpac | source ~/.config/nvim/init.vim | call minpac#clean() | call minpac#update('', {'do': 'quit'})

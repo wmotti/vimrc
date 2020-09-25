@@ -7,19 +7,20 @@ if &compatible
   set nocompatible
 endif
 
-if exists('*minpac#init')
-  " minpac is loaded.
-  call minpac#init()
+
+function! PackInit() abort
+  packadd minpac
+
+  call minpac#init({'progress_open': 'none'})
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-  " Additional plugins here.
-  " call minpac#add('...')
-endif
+  source ~/.config/nvim/packages.vim
+endfunction
 
 " Define user commands for updating/cleaning the plugins.
 " Each of them loads minpac, reloads .vimrc to register the
 " information of plugins, then performs the task.
-command! PackUpdate packadd minpac | source ~/.config/nvim/init.vim | call minpac#update('', {'do': 'call minpac#status()'})
-command! PackClean  packadd minpac | source ~/.config/nvim/init.vim | call minpac#clean()
-command! PackStatus packadd minpac | source ~/.config/nvim/init.vim | call minpac#status()
-command! PackUpdateAndQuit packadd minpac | source ~/.config/nvim/init.vim | call minpac#clean() | call minpac#update('', {'do': 'quit'})
+command! PackUpdate call PackInit() | source ~/.config/nvim/init.vim | call minpac#update('', {'do': 'call minpac#status()'})
+command! PackClean  call PackInit() | source ~/.config/nvim/init.vim | call minpac#clean()
+command! PackStatus call PackInit() | source ~/.config/nvim/init.vim | call minpac#status()
+command! PackUpdateAndQuit call PackInit() | source ~/.config/nvim/init.vim | call minpac#clean() | call minpac#update('', {'do': 'quit'})
